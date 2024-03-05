@@ -24,19 +24,22 @@ public:
     Status SetBounds( ServerContext * context,
                       const SetBoundsRequest *  request,
                       SetBoundsResponse  * response ) {
-        // TODO
+        min = request->min();
+        max = request->max();
         return Status::OK;
     }
     
     Status NextRandom( ServerContext * context,
                        const NextRandomRequest * request,
                        NextRandomResponse * response ) {
-        // TODO
+        int random = rand() % (max - min + 1) + min;
+        response->set_random(random);
         return Status::OK;
     }
 
 private:
-    // TODO
+    int min = 0;
+    int max = 10;
 };
 
 }
