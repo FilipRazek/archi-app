@@ -5,15 +5,16 @@
  */
 
 #include "random.h"
+static unsigned int min = 0;
+static unsigned int max = 10;
 
 void *
 set_bounds_1_svc(bounds *argp, struct svc_req *rqstp)
 {
 	static char * result;
 
-	/*
-	 * insert server code here
-	 */
+	min = argp->min;
+	max = argp->max;
 
 	return (void *) &result;
 }
@@ -23,9 +24,6 @@ next_random_1_svc(void *argp, struct svc_req *rqstp)
 {
 	static int  result;
 
-	/*
-	 * insert server code here
-	 */
-
+	result = rand() % (max - min + 1) + min;
 	return &result;
 }
