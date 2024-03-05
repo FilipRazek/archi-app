@@ -10,11 +10,11 @@
 
 
 void
-random_1(char *host)
+random_set_bounds(char *host, int min, int max )
 {
 	CLIENT *clnt;
 	void  *result_1;
-	bounds  set_bounds_1_arg;
+	bounds  set_bounds_1_arg = {min, max};
 	int  *result_2;
 	char *next_random_1_arg;
 
@@ -30,7 +30,30 @@ random_1(char *host)
 	if (result_1 == (void *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	result_2 = next_random_1((void*)&next_random_1_arg, clnt);
+#ifndef	DEBUG
+	clnt_destroy (clnt);
+#endif	 /* DEBUG */
+}
+
+void random_get_next_10( char * host )
+{
+	CLIENT *clnt;
+	int  *result_2;
+	char *next_random_1_arg;
+
+#ifndef	DEBUG
+	clnt = clnt_create (host, RANDOM, VERSION_UN, "udp");
+	if (clnt == NULL) {
+		clnt_pcreateerror (host);
+		exit (1);
+	}
+#endif	/* DEBUG */
+
+	for (int i = 0; i < 10; i++) {
+		result_2 = next_random_1((void*)&next_random_1_arg, clnt);
+		printf("%d ", *result_2);
+	}
+	printf("\n");
 	if (result_2 == (int *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
@@ -38,7 +61,6 @@ random_1(char *host)
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
 }
-
 
 int
 main (int argc, char *argv[])
@@ -50,6 +72,7 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	host = argv[1];
-	random_1 (host);
+	if (argc == 2) random_get_next_10(host);
+	if (argc == 4) random_set_bounds(host, atoi( argv[2] ), atoi( argv[3] ));
 exit (0);
 }
