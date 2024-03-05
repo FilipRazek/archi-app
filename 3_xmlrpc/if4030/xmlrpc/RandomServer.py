@@ -8,11 +8,13 @@ from xmlrpc.server import SimpleXMLRPCRequestHandler
 class RequestHandler( SimpleXMLRPCRequestHandler ):
     rpc_paths = ( '/IF4030', )
 
+class RandomServer:
+    def getData(self):
+        return '42'
+
 # Create server
 with SimpleXMLRPCServer(( 'localhost', 8000 ),
                         requestHandler = RequestHandler ) as server:
-
-    # TODO: écrire la classe RandomServer
 
     server.register_instance( RandomServer() )
     print( "server ready" )

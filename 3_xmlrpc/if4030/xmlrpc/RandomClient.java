@@ -16,7 +16,9 @@ public class RandomClient {
             XmlRpcClient client = new XmlRpcClient();
             client.setConfig( config );
         
-            // TODO: écrire le code du client
+            Object[] params = new Object[]{};
+            Object result = client.execute("getData", params);
+            System.out.println(result);
         }
         catch ( Exception e ) {
             System.err.println( "Client exception: " + e.toString() );
