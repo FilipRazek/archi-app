@@ -10,3 +10,4 @@ random_pb2.py
 random_pb2_grpc.py
 random_server
 random_server.o
+__pycache__/
