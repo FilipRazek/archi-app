@@ -7,12 +7,17 @@ import random_pb2_grpc
 
 
 def callNextRandom( hostname ):
-        # TODO
-        return
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = random_pb2_grpc.RandomServiceStub(channel)
+        for i in range(10):
+            response = stub.NextRandom(random_pb2.NextRandomRequest())
+            print(response.random, end=" ")
+        print()
 
 def callSetBounds( hostname, _min, _max ):
-        # TODO
-        return
+    with grpc.insecure_channel('localhost:50051') as channel:
+        stub = random_pb2_grpc.RandomServiceStub(channel)
+        response = stub.SetBounds(random_pb2.SetBoundsRequest(min=_min, max=_max))
 
 
 if __name__ == '__main__':
