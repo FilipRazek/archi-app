@@ -1,0 +1,7 @@
+random_client
+random_client.o
+random_server
+random_server.o
+random_clnt.o
+random_svc.o
+random_xdr.o
