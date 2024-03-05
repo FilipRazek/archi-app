@@ -16,9 +16,20 @@ public class RandomClient {
             XmlRpcClient client = new XmlRpcClient();
             client.setConfig( config );
         
-            Object[] params = new Object[]{};
-            Object result = client.execute("getData", params);
-            System.out.println(result);
+            if (args.length == 1) {
+                Object[] params = new Object[]{};
+                for (int i = 0; i < 10; i++) {
+                    System.out.printf("%d ", client.execute("getRandom", params));
+                }
+                System.out.println("");
+            } else if (args.length == 3) {
+                int min = Integer.parseInt(args[1]);
+                int max = Integer.parseInt(args[2]);
+                Object[] params = new Object[]{min, max};
+                client.execute("setBounds", params);
+            } else {
+                System.out.printf("Expected 1 or 3 arguments, got %d%n", args.length);
+            }
         }
         catch ( Exception e ) {
             System.err.println( "Client exception: " + e.toString() );
