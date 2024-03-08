@@ -27,9 +27,9 @@ public class RandomClient {
             connection.start();
             
             Session session = connection.createSession( false, Session.AUTO_ACKNOWLEDGE) ;
-            Queue destination = session.createQueue( "IF4030.JMS" );
+            Topic destination = session.createTopic( "IF4030.JMS" );
             MessageConsumer consumer = session.createConsumer( destination );
-            
+
             int i = 0;
             while( i < nb ) {
                 TextMessage message = ( TextMessage ) consumer.receive( 1000 );

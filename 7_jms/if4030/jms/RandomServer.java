@@ -30,7 +30,7 @@ public class RandomServer {
             connection.start();
             
             Session session = connection.createSession( false, Session.AUTO_ACKNOWLEDGE );
-            Queue destination = session.createQueue( "IF4030.JMS" );
+            Topic destination = session.createTopic( "IF4030.JMS" );
             MessageProducer producer = session.createProducer( destination );
             
             for( int i = 0; i < nb; ++i ) {
